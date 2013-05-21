@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StegyMain</class>
+ <widget class="QMainWindow" name="StegyMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>817</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>StegyMain</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="EncryptWidget" name="encryptPage"/>
+      <widget class="DecryptWidget" name="decryptPage"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>817</width>
+     <height>18</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionEncrypt"/>
+   <addaction name="actionDecrypt"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionEncrypt">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/Icons/encrypt.png</normaloff>:/Icons/encrypt.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Encrypt</string>
+   </property>
+  </action>
+  <action name="actionDecrypt">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/Icons/decrypt.png</normaloff>:/Icons/decrypt.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Decrypt</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>EncryptWidget</class>
+   <extends>QWidget</extends>
+   <header>encryptwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DecryptWidget</class>
+   <extends>QWidget</extends>
+   <header>decryptwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
