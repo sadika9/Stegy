@@ -468,6 +468,9 @@ int LsbCrypt::readByteArraySize()
 
 void LsbCrypt::writeStegoData(QByteArray cypherArray)
 {
+    // factor is used to stretch data array all over the image.
+    int factor = floor((double) availableSize(m_stegoImage) / (cypherArray.size() * 8));
+
     for (int i = 0; i < cypherArray.size(); ++i)
     {
         for (int j = 0, bitPos = 0; j < 8; ++j)
@@ -479,7 +482,8 @@ void LsbCrypt::writeStegoData(QByteArray cypherArray)
             if (bitPos == m_bitsPerByte)
             {
                 bitPos = 0;
-                ++m_dataPos;
+                //++m_dataPos;
+                m_dataPos += factor;
             }
         }
     }
@@ -487,6 +491,9 @@ void LsbCrypt::writeStegoData(QByteArray cypherArray)
 
 void LsbCrypt::readStegoData(char toArray[], int cypherByteArraySize)
 {
+    // factor is used to stretch data array all over the image.
+    int factor = floor((double) availableSize(m_stegoImage) / (cypherByteArraySize * 8));
+
     for (int i = 0; i < cypherByteArraySize; ++i)
     {
         toArray[i] = 0;
@@ -506,7 +513,8 @@ void LsbCrypt::readStegoData(char toArray[], int cypherByteArraySize)
             if (bitPos == m_bitsPerByte)
             {
                 bitPos = 0;
-                ++m_dataPos;
+                //++m_dataPos;
+                m_dataPos += factor;
             }
         }
     }
