@@ -20,7 +20,7 @@ EncryptWidget::EncryptWidget(QWidget *parent) :
     ui->graphicsView->setScene(new QGraphicsScene);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
-    //hidePreview();
+    hidePreview();
     disableButtons();
     setupConnections();
 }
@@ -264,6 +264,7 @@ void EncryptWidget::disableButtons()
 
 int EncryptWidget::getBitsPerByte()
 {
+    /*
     // hard coding is used since there is a problem with the lsbcrypt algorithm
     // currently 1, 2, 4 & 8 bits per byte are supported.
 
@@ -279,7 +280,9 @@ int EncryptWidget::getBitsPerByte()
         return 8;
     default:
         return 1;
-    }
+    }*/
+
+    return 9 - ui->qualitySlider->value();
 }
 
 void EncryptWidget::setupConnections()

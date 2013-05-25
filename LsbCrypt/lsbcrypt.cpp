@@ -93,6 +93,11 @@ QImage LsbCrypt::encryptImage(QImage &coverImage, QImage &secretImage)
     }*/
 
     writeStegoData(cypherArray);
+    if (m_lastError == Error_InvalidFactor)
+    {
+        qWarning() << "encryptImage()" << "InvalidFactor";
+        return QImage();
+    }
 
 
 
@@ -146,6 +151,11 @@ QImage LsbCrypt::decryptImage(QImage &stegoImage)
 
     char data[cypherByteArraySize];
     readStegoData(data, cypherByteArraySize);
+    if (m_lastError == Error_InvalidFactor)
+    {
+        qWarning() << "decryptImage()" << "InvalidFactor";
+        return QImage();
+    }
 
 
     QByteArray cypherByteArray = QByteArray::fromRawData(reinterpret_cast<char*>(data), sizeof data);
@@ -253,6 +263,12 @@ QImage LsbCrypt::encryptString(QImage &coverImage, QString text)
         LsbCryptWrite::writeData(cypherArray.data()[i], m_stegoImage.bits(), sizeof (char) * 8, m_bitsPerByte, &m_dataPos);*/
 
     writeStegoData(cypherArray);
+    if (m_lastError == Error_InvalidFactor)
+    {
+        qWarning() << "encryptString()" << "InvalidFactor";
+        return QImage();
+    }
+
 
     m_lastError = Error_NoError;
     return m_stegoImage;
@@ -305,6 +321,11 @@ QString LsbCrypt::decryptString(QImage &stegoImage)
 
     char data[cypherByteArraySize];
     readStegoData(data, cypherByteArraySize);
+    if (m_lastError == Error_InvalidFactor)
+    {
+        qWarning() << "decryptString()" << "InvalidFactor";
+        return QString();
+    }
 
 
     QByteArray cypherByteArray = QByteArray::fromRawData(reinterpret_cast<char*>(data), sizeof data);
@@ -470,10 +491,16 @@ void LsbCrypt::writeStegoData(QByteArray cypherArray)
 {
     // factor is used to stretch data array all over the image.
     int factor = floor((double) availableSize(m_stegoImage) / (cypherArray.size() * 8));
-
-    for (int i = 0; i < cypherArray.size(); ++i)
+    if (factor < 0)
     {
-        for (int j = 0, bitPos = 0; j < 8; ++j)
+        m_lastError = Error_InvalidFactor;
+        qWarning() << "writeStegoData()" << "Error_InvalidFactor";
+        return;
+    }
+
+    for (int i = 0, bitPos = 0; i < cypherArray.size(); ++i)
+    {
+        for (int j = 0; j < 8; ++j)
         {
             bool bit = LsbCryptRead::getBit(cypherArray.data()[i], j);
 
@@ -493,15 +520,22 @@ void LsbCrypt::readStegoData(char toArray[], int cypherByteArraySize)
 {
     // factor is used to stretch data array all over the image.
     int factor = floor((double) availableSize(m_stegoImage) / (cypherByteArraySize * 8));
+    if (factor < 0)
+    {
+        m_lastError = Error_InvalidFactor;
+        qWarning() << "readStegoData()" << "Error_InvalidFactor";
+        return;
+    }
+
 
     for (int i = 0; i < cypherByteArraySize; ++i)
     {
         toArray[i] = 0;
     }
 
-    for (int i = 0; i < cypherByteArraySize; ++i)
+    for (int i = 0, bitPos = 0; i < cypherByteArraySize; ++i)
     {
-        for (int j = 0, bitPos = 0; j < 8; ++j)
+        for (int j = 0; j < 8; ++j)
         {
             bool bit = LsbCryptRead::getBit(m_stegoImage.bits()[m_dataPos], bitPos++);
 

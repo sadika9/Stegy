@@ -19,6 +19,7 @@ public:
 private slots:
     void setPage(QString action);
     void showMessage(QString message);
+    void about();
     
 private:
     Ui::StegyMain *ui;

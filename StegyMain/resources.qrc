@@ -3,5 +3,8 @@
         <file>Icons/decrypt.png</file>
         <file>Icons/encrypt.png</file>
         <file>Icons/save.png</file>
+        <file>Icons/61.png</file>
+        <file>Icons/62.png</file>
+        <file>Icons/65.png</file>
     </qresource>
 </RCC>

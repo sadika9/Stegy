@@ -169,7 +169,8 @@ public:
                Error_EncryptionError,
                Error_DecryptionError,
                Error_SecretImageTooLarge,
-               Error_WrongFormat};
+               Error_WrongFormat,
+               Error_InvalidFactor};
 
     LsbCrypt(QString passowrd);
 

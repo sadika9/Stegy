@@ -47,6 +47,9 @@ static void lsbCryptErrorMessages(lsb::LsbCrypt::Error error, QWidget *parent = 
     case LsbCrypt::Error_WrongFormat:
         msg = qApp->tr("LsbCrypt Error: Wrong Format");
         break;
+    case LsbCrypt::Error_InvalidFactor:
+        msg = qApp->tr("LsbCrypt Error: InvalidFactor");
+        break;
     default:
         msg = qApp->tr("LsbCrypt Error: Unknown Error");
         break;

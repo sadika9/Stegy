@@ -48,12 +48,13 @@
    </attribute>
    <addaction name="actionEncrypt"/>
    <addaction name="actionDecrypt"/>
+   <addaction name="actionAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionEncrypt">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/Icons/encrypt.png</normaloff>:/Icons/encrypt.png</iconset>
+     <normaloff>:/Icons/62.png</normaloff>:/Icons/62.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Encrypt</string>
@@ -62,10 +63,19 @@
   <action name="actionDecrypt">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/Icons/decrypt.png</normaloff>:/Icons/decrypt.png</iconset>
+     <normaloff>:/Icons/61.png</normaloff>:/Icons/61.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Decrypt</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/Icons/65.png</normaloff>:/Icons/65.png</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
