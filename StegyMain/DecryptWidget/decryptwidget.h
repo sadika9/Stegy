@@ -2,7 +2,7 @@
 #define DECRYPTWIDGET_H
 
 #include <QWidget>
-#include "../../LsbCrypt/lsbcrypt.h"
+#include "lsbcrypt.h"
 
 namespace Ui {
 class DecryptWidget;

@@ -23,6 +23,8 @@ StegyMain::StegyMain(QWidget *parent) :
 
     connect(ui->actionAbout, &QAction::triggered, this, &StegyMain::about);
 
+    setWindowTitle(tr("Stegy"));
+
     statusBar()->showMessage(tr("Ready"), 2000);
 }
 
@@ -50,6 +52,9 @@ void StegyMain::showMessage(QString message)
 
 void StegyMain::about()
 {
+    QMessageBox::about(this,
+                           tr("About Stegy"),
+                           tr("A simple steganography tool by Sadika Sumanapala."));
     /*QMessageBox::about(this,
                        tr("About Stegy"),
                        tr("This is simple steganography software."
