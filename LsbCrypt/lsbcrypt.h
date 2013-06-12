@@ -174,11 +174,11 @@ public:
 
     LsbCrypt(QString passowrd);
 
-    QImage encryptImage(QImage &coverImage, QImage &secretImage);
-    QImage decryptImage(QImage &stegoImage);
+    QImage hideImage(QImage &coverImage, QImage &secretImage);
+    QImage unhideImage(QImage &stegoImage);
 
-    QImage encryptString(QImage &coverImage, QString text);
-    QString decryptString(QImage &stegoImage);
+    QImage hideString(QImage &coverImage, QString text);
+    QString unhideString(QImage &stegoImage);
 
     QString password() const;
     void setPassword(const QString &password);

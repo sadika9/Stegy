@@ -18,14 +18,14 @@ int main(int argc, char *argv[])
 
     lsb::LsbCrypt cr("ccv");
     cr.setBitsPerByte(1);
-    QImage i = cr.encryptImage(cover, secret);
+    QImage i = cr.hideImage(cover, secret);
     //QImage i = cr.encryptString(cover, QString("hello world"));
     cr.saveImage("/home/sadika/rrr.png", i);
 
     lsb::LsbCrypt dr("ccv");
     char format[] = "png";
     QImage input =  QImage("/home/sadika/rrr", format);
-    QImage j = dr.decryptImage(input);
+    QImage j = dr.unhideImage(input);
     //QString st = dr.decryptString(input); qDebug() << st;
 
 

@@ -13,7 +13,7 @@ LsbCrypt::LsbCrypt(QString passowrd):
 {
 }
 
-QImage LsbCrypt::encryptImage(QImage &coverImage, QImage &secretImage)
+QImage LsbCrypt::hideImage(QImage &coverImage, QImage &secretImage)
 {
     // reset data position since we are about to start encryption.
     m_dataPos = 0;
@@ -105,7 +105,7 @@ QImage LsbCrypt::encryptImage(QImage &coverImage, QImage &secretImage)
     return m_stegoImage;
 }
 
-QImage LsbCrypt::decryptImage(QImage &stegoImage)
+QImage LsbCrypt::unhideImage(QImage &stegoImage)
 {
     // reset data position; going to start decryption
     m_dataPos = 0;
@@ -188,7 +188,7 @@ QImage LsbCrypt::decryptImage(QImage &stegoImage)
     return m_secretImage;
 }
 
-QImage LsbCrypt::encryptString(QImage &coverImage, QString text)
+QImage LsbCrypt::hideString(QImage &coverImage, QString text)
 {
     // reset data position since we are about to start encryption.
     m_dataPos = 0;
@@ -274,7 +274,7 @@ QImage LsbCrypt::encryptString(QImage &coverImage, QString text)
     return m_stegoImage;
 }
 
-QString LsbCrypt::decryptString(QImage &stegoImage)
+QString LsbCrypt::unhideString(QImage &stegoImage)
 {
     // reset data position; going to start decryption
     m_dataPos = 0;

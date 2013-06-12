@@ -143,7 +143,7 @@ void DecryptWidget::decryptImage()
 
     if (m_format == LsbCrypt::Format_Text)
     {
-        m_secretText = crypt.decryptString(m_stegoImage);
+        m_secretText = crypt.unhideString(m_stegoImage);
 
         if (crypt.lastError() == LsbCrypt::Error_NoError)
         {
@@ -161,7 +161,7 @@ void DecryptWidget::decryptImage()
     }
     else if (m_format == LsbCrypt::Format_Image)
     {
-        m_secretImage = crypt.decryptImage(m_stegoImage);
+        m_secretImage = crypt.unhideImage(m_stegoImage);
 
         if (crypt.lastError() == LsbCrypt::Error_NoError)
         {
