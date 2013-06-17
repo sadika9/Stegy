@@ -42,6 +42,10 @@ void EncryptWidget::showPreview(QString image)
 
         ui->graphicsView->setVisible(true);
         ui->hidePreviewButton->setVisible(true);
+
+        QList<int> sizes = ui->splitter->sizes();
+        sizes.replace(1, ui->graphicsView->scene()->width());
+        ui->splitter->setSizes(sizes);
     }
     else if (image == "SecretPreviewButton")
     {
@@ -51,6 +55,10 @@ void EncryptWidget::showPreview(QString image)
 
         ui->graphicsView->setVisible(true);
         ui->hidePreviewButton->setVisible(true);
+
+        QList<int> sizes = ui->splitter->sizes();
+        sizes.replace(1, ui->graphicsView->scene()->width());
+        ui->splitter->setSizes(sizes);
     }
     else if (image == "EncryptButton")
     {
@@ -60,6 +68,10 @@ void EncryptWidget::showPreview(QString image)
 
         ui->graphicsView->setVisible(true);
         ui->hidePreviewButton->setVisible(true);
+
+        QList<int> sizes = ui->splitter->sizes();
+        sizes.replace(1, ui->graphicsView->scene()->width());
+        ui->splitter->setSizes(sizes);
     }
 }
 
@@ -67,6 +79,10 @@ void EncryptWidget::hidePreview()
 {
     ui->graphicsView->setVisible(false);
     ui->hidePreviewButton->setVisible(false);
+
+    QList<int> sizes = ui->splitter->sizes();
+    sizes.replace(1, 0);
+    ui->splitter->setSizes(sizes);
 }
 
 void EncryptWidget::formatChanged()
