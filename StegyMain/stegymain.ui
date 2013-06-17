@@ -59,6 +59,9 @@
    <property name="text">
     <string>&amp;Encrypt</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
+   </property>
   </action>
   <action name="actionDecrypt">
    <property name="icon">
@@ -68,6 +71,9 @@
    <property name="text">
     <string>&amp;Decrypt</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+D</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="icon">
@@ -76,6 +82,9 @@
    </property>
    <property name="text">
     <string>About</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+A</string>
    </property>
   </action>
  </widget>

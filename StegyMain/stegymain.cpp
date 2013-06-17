@@ -24,6 +24,7 @@ StegyMain::StegyMain(QWidget *parent) :
     connect(ui->actionAbout, &QAction::triggered, this, &StegyMain::about);
 
     setWindowTitle(tr("Stegy"));
+    setWindowIcon(QIcon(":/Icons/62.png"));
 
     statusBar()->showMessage(tr("Ready"), 2000);
 }
