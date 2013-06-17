@@ -55,11 +55,18 @@ void StegyMain::about()
 {
     QMessageBox::about(this,
                            tr("About Stegy"),
-                           tr("A simple steganography tool by Sadika Sumanapala."));
+                           tr("<h3>Stegy</h3>"
+                              "A simple steganography tool by <a href=\"mailto:sadikahs@gmail.com\">Sadika Sumanapala</a>.<br><br>"
+                              "This application contains code "
+                              "(<a href=\"http://qt-project.org/wiki/Simple_encryption\">SimpleCrypt</a>)<br>"
+                              "copyrighted by André Somers.<br>"
+                              "See the simplecyptlicense.txt for more details."));
+
+    // I'll add full license later
     /*QMessageBox::about(this,
                        tr("About Stegy"),
                        tr("This is simple steganography software."
-                           "This application contains code copyrighted by André Somers. For this code, the following license applies:\n"
+                           "This application contains code(SimpleCrypt) copyrighted by André Somers. For this code, the following license applies:\n"
                           "Copyright (c) 2011, Andre Somers""\n"
                           "All rights reserved.""\n""\n"
 
