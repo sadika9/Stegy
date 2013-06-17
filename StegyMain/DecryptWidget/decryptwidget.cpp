@@ -156,7 +156,7 @@ void DecryptWidget::decryptImage()
 
             ui->saveButton->setVisible(true);
 
-            emit statusMessage(tr("Decrypted."));
+            emit statusMessage(tr("Decoded."));
         }
     }
     else if (m_format == LsbCrypt::Format_Image)
@@ -175,7 +175,7 @@ void DecryptWidget::decryptImage()
 
             ui->saveButton->setVisible(true);
 
-            emit statusMessage(tr("Decrypted."));
+            emit statusMessage(tr("Decoded."));
         }
     }
     lsbCryptErrorMessages(crypt.lastError(), this);

@@ -230,7 +230,7 @@ void EncryptWidget::encryptImage()
         ui->saveButton->setEnabled(true);
         showPreview("EncryptButton");
 
-        emit statusMessage(tr("Encrypted."));
+        emit statusMessage(tr("Encoded."));
     }
     else if (m_format == LsbCrypt::Format_Image)
     {
@@ -248,7 +248,7 @@ void EncryptWidget::encryptImage()
         ui->saveButton->setEnabled(true);
         showPreview("EncryptButton");
 
-        emit statusMessage(tr("Encrypted."));
+        emit statusMessage(tr("Encoded."));
     }
 }
 
