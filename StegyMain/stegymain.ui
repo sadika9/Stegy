@@ -48,6 +48,7 @@
    </attribute>
    <addaction name="actionEncrypt"/>
    <addaction name="actionDecrypt"/>
+   <addaction name="separator"/>
    <addaction name="actionAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -57,7 +58,10 @@
      <normaloff>:/Icons/62.png</normaloff>:/Icons/62.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Encrypt</string>
+    <string>&amp;Encode</string>
+   </property>
+   <property name="toolTip">
+    <string>Encode</string>
    </property>
    <property name="shortcut">
     <string>Alt+E</string>
@@ -69,7 +73,10 @@
      <normaloff>:/Icons/61.png</normaloff>:/Icons/61.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Decrypt</string>
+    <string>&amp;Decode</string>
+   </property>
+   <property name="toolTip">
+    <string>Decode</string>
    </property>
    <property name="shortcut">
     <string>Alt+D</string>
