@@ -382,7 +382,7 @@ void LsbSteg::writeBitsPerByte()
         return;
     }
 
-    int size = ceil((double) nMagicBits / nMagicBitsPerByte);
+    int size = ceil((double) nBitsPerByte_Bits / nBitsPerByte_BitsPerByte);
 
     for (int i = 0; i < size; ++i)
     {
@@ -399,7 +399,7 @@ void LsbSteg::writeBitsPerByte()
 void LsbSteg::readBitsPerByte()
 {
     m_bitsPerByte = LsbStegRead::parseInt(
-                m_stegoImage.bits(), &m_dataPos, nMagicBits, nMagicBitsPerByte);
+                m_stegoImage.bits(), &m_dataPos, nBitsPerByte_Bits, nBitsPerByte_BitsPerByte);
 
     m_bitsPerByte += 1;
 
@@ -629,7 +629,7 @@ LsbSteg::Format LsbSteg::getFormat(QImage &image)
 
 int LsbSteg::encryptedObjectSize(QImage &secret)
 {
-    int usedSize = ceil((double) nMagicBits / nMagicBitsPerByte);
+    int usedSize = ceil((double) nBitsPerByte_Bits / nBitsPerByte_BitsPerByte);
     usedSize += ceil((double) nFormatBits / nFormatBitsPerByte);
     usedSize += sizeOfInt;
 
@@ -657,7 +657,7 @@ int LsbSteg::encryptedObjectSize(QImage &secret)
 
 int LsbSteg::encryptedObjectSize(QString text)
 {
-    int usedSize = ceil((double) nMagicBits / nMagicBitsPerByte);
+    int usedSize = ceil((double) nBitsPerByte_Bits / nBitsPerByte_BitsPerByte);
     usedSize += ceil((double) nFormatBits / nFormatBitsPerByte);
     usedSize += sizeOfInt;
 
@@ -695,7 +695,7 @@ int LsbSteg::availableSize(QImage &image)
     // size taken for store format
     headerSize += ceil((double) nFormatBits / nFormatBitsPerByte);  // bytes
     // size to store bits per byte value
-    headerSize += ceil((double)nMagicBits / nMagicBitsPerByte);  // bytes
+    headerSize += ceil((double)nBitsPerByte_Bits / nBitsPerByte_BitsPerByte);  // bytes
     // size taken to store the size of byte array
     headerSize += ceil((double) sizeOfInt / m_bitsPerByte);  // bytes
 

@@ -235,12 +235,15 @@ private:
     int m_dataPos;
     int m_bitsPerByte;
 
-    static const int m_sizeOfInt = 32;
-    static const int m_bitsPerByteMaxValue = 8;
-    static const int nMagicBits = 8;
-    static const int nMagicBitsPerByte = 1;
     static const int nFormatBits = 1;
     static const int nFormatBitsPerByte = 1;
+
+    static const int sizeOfInt = 32;
+
+    static const int bitsPerByteMaxValue = 8;
+
+    static const int nBitsPerByte_Bits = 8;
+    static const int nBitsPerByte_BitsPerByte = 1;
 
     QImage m_stegoImage;
     QImage m_secretImage;
