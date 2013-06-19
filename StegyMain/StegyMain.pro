@@ -72,6 +72,5 @@ win32:LIBS += -LF:\\opencv\\lib \
 RESOURCES += \
     resources.qrc
 
-OTHER_FILES += \
-    AboutDialog/AboutDialog.pro
+OTHER_FILES +=
 

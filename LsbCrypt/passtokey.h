@@ -1,8 +1,8 @@
-/**
-  Following function is based on work done by Andre Somers.
-  original code is on qt-project.org forum
-  http://qt-project.org/forums/viewthread/4565/P45
- */
+/*
+Following function is based on work done by Andre Somers.
+original code is on qt-project.org forum
+http://qt-project.org/forums/viewthread/4565/P45
+*/
 
 #ifndef PASSTOKEY_H
 #define PASSTOKEY_H
