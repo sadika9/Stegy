@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace lsb {
 
-class LsbCryptRead
+class LsbStegRead
 {
 public:
     template <typename T>
@@ -138,7 +138,7 @@ public:
 
 };
 
-class LsbCryptWrite
+class LsbStegWrite
 {
 public:
     template <typename Tp>
@@ -153,7 +153,7 @@ public:
     {
         for (int i = 0, bitPos = 0; i < nBits; ++i, ++bitPos)
         {
-            bool bit = LsbCryptRead::getBit(data, i);
+            bool bit = LsbStegRead::getBit(data, i);
 
             if (bitPos >= bitsPerByte)
             {
@@ -169,7 +169,7 @@ public:
     }
 };
 
-class LsbCrypt
+class LsbSteg
 {
 public:
     enum Format{Format_Text = 0,
@@ -189,7 +189,7 @@ public:
                Error_WrongFormat,
                Error_InvalidFactor};
 
-    LsbCrypt(QString passowrd);
+    LsbSteg(QString passowrd);
 
     QImage hideImage(QImage &coverImage, QImage &secretImage);
     QImage unhideImage(QImage &stegoImage);

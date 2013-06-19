@@ -106,12 +106,12 @@ void EncryptWidget::formatChanged()
 {
     if (ui->imageRadio->isChecked())
     {
-        m_format = lsb::LsbCrypt::Format_Image;
+        m_format = lsb::LsbSteg::Format_Image;
         ui->formatStack->setCurrentIndex(1);
     }
     else
     {
-        m_format = lsb::LsbCrypt::Format_Text;
+        m_format = lsb::LsbSteg::Format_Text;
         ui->formatStack->setCurrentIndex(0);
     }
 }
@@ -228,10 +228,10 @@ void EncryptWidget::encryptImage()
 
     formatChanged();
 
-    LsbCrypt crypt(ui->passphraseEdit->text());
+    LsbSteg crypt(ui->passphraseEdit->text());
     crypt.setBitsPerByte(getBitsPerByte());
 
-    if (m_format == LsbCrypt::Format_Text)
+    if (m_format == LsbSteg::Format_Text)
     {
         if (crypt.availableSize(m_coverImage) < crypt.encryptedObjectSize(ui->passphraseEdit->text()))
         {
@@ -241,7 +241,7 @@ void EncryptWidget::encryptImage()
 
         m_stegoImage = crypt.hideString(m_coverImage, ui->secretTextEdit->toPlainText());
 
-        if (crypt.lastError() != LsbCrypt::Error_NoError)
+        if (crypt.lastError() != LsbSteg::Error_NoError)
         {
             lsbCryptErrorMessages(crypt.lastError(), this);
             return;
@@ -252,7 +252,7 @@ void EncryptWidget::encryptImage()
 
         emit statusMessage(tr("Encoded."));
     }
-    else if (m_format == LsbCrypt::Format_Image)
+    else if (m_format == LsbSteg::Format_Image)
     {
         if (crypt.availableSize(m_coverImage) < crypt.encryptedObjectSize(m_secretImage))
         {
@@ -262,7 +262,7 @@ void EncryptWidget::encryptImage()
 
         m_stegoImage = crypt.hideImage(m_coverImage, m_secretImage);
 
-        if (crypt.lastError() != LsbCrypt::Error_NoError)
+        if (crypt.lastError() != LsbSteg::Error_NoError)
         {
             lsbCryptErrorMessages(crypt.lastError(), this);
             return;
@@ -288,7 +288,7 @@ void EncryptWidget::saveImage()
     }
 
 
-    lsb::LsbCrypt::saveImage(fileName.toLatin1(), m_stegoImage);
+    lsb::LsbSteg::saveImage(fileName.toLatin1(), m_stegoImage);
 
     emit statusMessage(tr("Stego image saved."));
 }

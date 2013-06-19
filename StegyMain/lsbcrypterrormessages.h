@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMessageBox>
 #include <QApplication>
 
-static void lsbCryptErrorMessages(lsb::LsbCrypt::Error error, QWidget *parent = 0)
+static void lsbCryptErrorMessages(lsb::LsbSteg::Error error, QWidget *parent = 0)
 {
     using namespace lsb;
 
@@ -30,41 +30,41 @@ static void lsbCryptErrorMessages(lsb::LsbCrypt::Error error, QWidget *parent = 
 
     switch (error)
     {
-    case LsbCrypt::Error_NoError:
+    case LsbSteg::Error_NoError:
         return;
         break;
-    case LsbCrypt::Error_InvalidBitsPerByte:
+    case LsbSteg::Error_InvalidBitsPerByte:
         msg = qApp->tr("Invalid Bits Per Byte");
         break;
-    case LsbCrypt::Error_InvalidByteArraySize:
+    case LsbSteg::Error_InvalidByteArraySize:
         msg = qApp->tr("Invalid Byte Array Size:");
-    case LsbCrypt::Error_InvalidCoverImage:
+    case LsbSteg::Error_InvalidCoverImage:
         msg = qApp->tr("Invalid Cover Image");
         break;
-    case LsbCrypt::Error_InvalidSecretImage:
+    case LsbSteg::Error_InvalidSecretImage:
         msg = qApp->tr("Invalid Secret Image");
-    case LsbCrypt::Error_InvalidStegoImage:
+    case LsbSteg::Error_InvalidStegoImage:
         msg = qApp->tr("Invalid Stego Image");
         break;
-    case LsbCrypt::Error_InvalidText:
+    case LsbSteg::Error_InvalidText:
         msg = qApp->tr("Invalid Text");
         break;
-    case LsbCrypt::Error_SecretTextTooLarge:
+    case LsbSteg::Error_SecretTextTooLarge:
         msg = qApp->tr("Secret Text Too Large");
         break;
-    case LsbCrypt::Error_EncryptionError:
+    case LsbSteg::Error_EncryptionError:
         msg = qApp->tr("LsbCrypt Error: Encryption Error");
         break;
-    case LsbCrypt::Error_DecryptionError:
+    case LsbSteg::Error_DecryptionError:
         msg = qApp->tr("Decryption Error");
         break;
-    case LsbCrypt::Error_SecretImageTooLarge:
+    case LsbSteg::Error_SecretImageTooLarge:
         msg = qApp->tr("Secret Image Too Large");
         break;
-    case LsbCrypt::Error_WrongFormat:
+    case LsbSteg::Error_WrongFormat:
         msg = qApp->tr("Wrong Format");
         break;
-    case LsbCrypt::Error_InvalidFactor:
+    case LsbSteg::Error_InvalidFactor:
         msg = qApp->tr("InvalidFactor");
         break;
     default:

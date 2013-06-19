@@ -96,7 +96,7 @@ void DecryptWidget::openImage()
 
 void DecryptWidget::saveSecretData()
 {
-    if (m_format == lsb::LsbCrypt::Format_Text)
+    if (m_format == lsb::LsbSteg::Format_Text)
     {
         QString fileName = QFileDialog::getSaveFileName(this,
                                                         tr("Save Text"),
@@ -115,7 +115,7 @@ void DecryptWidget::saveSecretData()
 
         emit statusMessage(tr("File Saved."));
     }
-    else if (m_format == lsb::LsbCrypt::Format_Image)
+    else if (m_format == lsb::LsbSteg::Format_Image)
     {
         QString fileName = QFileDialog::getSaveFileName(this,
                                                         tr("Save Image"),
@@ -154,15 +154,15 @@ void DecryptWidget::decryptImage()
     ui->plainTextEdit->setVisible(false);
     ui->graphicsView->setVisible(false);
 
-    m_format = LsbCrypt::getFormat(m_stegoImage);
+    m_format = LsbSteg::getFormat(m_stegoImage);
 
-    LsbCrypt crypt(ui->passphraseEdit->text());
+    LsbSteg crypt(ui->passphraseEdit->text());
 
-    if (m_format == LsbCrypt::Format_Text)
+    if (m_format == LsbSteg::Format_Text)
     {
         m_secretText = crypt.unhideString(m_stegoImage);
 
-        if (crypt.lastError() == LsbCrypt::Error_NoError)
+        if (crypt.lastError() == LsbSteg::Error_NoError)
         {
             ui->plainTextEdit->setPlainText(m_secretText);
 
@@ -176,11 +176,11 @@ void DecryptWidget::decryptImage()
             emit statusMessage(tr("Decoded."));
         }
     }
-    else if (m_format == LsbCrypt::Format_Image)
+    else if (m_format == LsbSteg::Format_Image)
     {
         m_secretImage = crypt.unhideImage(m_stegoImage);
 
-        if (crypt.lastError() == LsbCrypt::Error_NoError)
+        if (crypt.lastError() == LsbSteg::Error_NoError)
         {
             ui->graphicsView->scene()->clear();
             QGraphicsPixmapItem *pixItem = new QGraphicsPixmapItem(QPixmap::fromImage(m_secretImage));

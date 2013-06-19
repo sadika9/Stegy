@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDebug>
 
 namespace lsb {
-LsbCrypt::LsbCrypt(QString passowrd):
+LsbSteg::LsbSteg(QString passowrd):
     m_dataPos(0),
     m_bitsPerByte(1),
     m_password(passowrd),
@@ -30,7 +30,7 @@ LsbCrypt::LsbCrypt(QString passowrd):
 {
 }
 
-QImage LsbCrypt::hideImage(QImage &coverImage, QImage &secretImage)
+QImage LsbSteg::hideImage(QImage &coverImage, QImage &secretImage)
 {
     // reset data position since we are about to start encryption.
     m_dataPos = 0;
@@ -122,7 +122,7 @@ QImage LsbCrypt::hideImage(QImage &coverImage, QImage &secretImage)
     return m_stegoImage;
 }
 
-QImage LsbCrypt::unhideImage(QImage &stegoImage)
+QImage LsbSteg::unhideImage(QImage &stegoImage)
 {
     // reset data position; going to start decryption
     m_dataPos = 0;
@@ -205,7 +205,7 @@ QImage LsbCrypt::unhideImage(QImage &stegoImage)
     return m_secretImage;
 }
 
-QImage LsbCrypt::hideString(QImage &coverImage, QString text)
+QImage LsbSteg::hideString(QImage &coverImage, QString text)
 {
     // reset data position since we are about to start encryption.
     m_dataPos = 0;
@@ -291,7 +291,7 @@ QImage LsbCrypt::hideString(QImage &coverImage, QString text)
     return m_stegoImage;
 }
 
-QString LsbCrypt::unhideString(QImage &stegoImage)
+QString LsbSteg::unhideString(QImage &stegoImage)
 {
     // reset data position; going to start decryption
     m_dataPos = 0;
@@ -374,9 +374,9 @@ QString LsbCrypt::unhideString(QImage &stegoImage)
     return text;
 }
 
-void LsbCrypt::writeBitsPerByte()
+void LsbSteg::writeBitsPerByte()
 {
-    if (m_bitsPerByte < 1 || m_bitsPerByte > m_bitsPerByteMaxValue)
+    if (m_bitsPerByte < 1 || m_bitsPerByte > bitsPerByteMaxValue)
     {
         m_lastError = Error_InvalidBitsPerByte;
         return;
@@ -386,9 +386,9 @@ void LsbCrypt::writeBitsPerByte()
 
     for (int i = 0; i < size; ++i)
     {
-        bool bit = LsbCryptRead::getBit((m_bitsPerByte - 1), i);
+        bool bit = LsbStegRead::getBit((m_bitsPerByte - 1), i);
 
-        LsbCryptWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos++, 0);
+        LsbStegWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos++, 0);
     }
 
     /*LsbCryptWrite::writeData(
@@ -396,27 +396,27 @@ void LsbCrypt::writeBitsPerByte()
                 nMagicBits, nMagicBitsPerByte, &m_dataPos);*/
 }
 
-void LsbCrypt::readBitsPerByte()
+void LsbSteg::readBitsPerByte()
 {
-    m_bitsPerByte = LsbCryptRead::parseInt(
+    m_bitsPerByte = LsbStegRead::parseInt(
                 m_stegoImage.bits(), &m_dataPos, nMagicBits, nMagicBitsPerByte);
 
     m_bitsPerByte += 1;
 
-    if (m_bitsPerByte < 1 || m_bitsPerByte > m_bitsPerByteMaxValue)
+    if (m_bitsPerByte < 1 || m_bitsPerByte > bitsPerByteMaxValue)
     {
         m_lastError = Error_InvalidBitsPerByte;
         return;
     }
 }
 
-void LsbCrypt::writeFormat(Format format)
+void LsbSteg::writeFormat(Format format)
 {
     m_format = format;
 
     bool bit = (m_format == Format_Image) ? true : false;
 
-    LsbCryptWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos, 0);
+    LsbStegWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos, 0);
     ++m_dataPos;
 
     /*if (m_format == Format_Text)    // text -> 0
@@ -434,9 +434,9 @@ void LsbCrypt::writeFormat(Format format)
     }*/
 }
 
-void LsbCrypt::readFormat()
+void LsbSteg::readFormat()
 {
-    int fmt = LsbCryptRead::parseInt(
+    int fmt = LsbStegRead::parseInt(
                 m_stegoImage.bits(), &m_dataPos, nFormatBits, nFormatBitsPerByte);
 
     if (fmt == 0)
@@ -445,7 +445,7 @@ void LsbCrypt::readFormat()
         m_format = Format_Image;
 }
 
-void LsbCrypt::writeByteArraySize(int size)
+void LsbSteg::writeByteArraySize(int size)
 {
     if (size < 0)
     {
@@ -453,11 +453,11 @@ void LsbCrypt::writeByteArraySize(int size)
         return;
     }
 
-    for (int i = 0, bitPos = 0; i < m_sizeOfInt; ++i)
+    for (int i = 0, bitPos = 0; i < sizeOfInt; ++i)
     {
-        bool bit = LsbCryptRead::getBit(size, i);
+        bool bit = LsbStegRead::getBit(size, i);
 
-        LsbCryptWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos, bitPos++);
+        LsbStegWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos, bitPos++);
 
         if (bitPos == m_bitsPerByte)
         {
@@ -471,16 +471,16 @@ void LsbCrypt::writeByteArraySize(int size)
                 size, m_stegoImage.bits(), m_sizeOfInt, m_bitsPerByte, &m_dataPos);*/
 }
 
-int LsbCrypt::readByteArraySize()
+int LsbSteg::readByteArraySize()
 {
     /*int size = LsbCryptRead::parseInt(
                 m_stegoImage.bits(), &m_dataPos, m_sizeOfInt,  m_bitsPerByte);*/
 
     int size = 0;
 
-    for (int i = 0, bitPos = 0; i < m_sizeOfInt; ++i)
+    for (int i = 0, bitPos = 0; i < sizeOfInt; ++i)
     {
-        bool bit = LsbCryptRead::getBit(m_stegoImage.bits()[m_dataPos], bitPos++);
+        bool bit = LsbStegRead::getBit(m_stegoImage.bits()[m_dataPos], bitPos++);
 
         if (bit)
             size |= (1 << i);
@@ -504,7 +504,7 @@ int LsbCrypt::readByteArraySize()
     return size;
 }
 
-void LsbCrypt::writeStegoData(QByteArray cypherArray)
+void LsbSteg::writeStegoData(QByteArray cypherArray)
 {
     // factor is used to stretch data array all over the image.
     int factor = floor((double) availableSize(m_stegoImage) / (cypherArray.size() * 8));
@@ -519,9 +519,9 @@ void LsbCrypt::writeStegoData(QByteArray cypherArray)
     {
         for (int j = 0; j < 8; ++j)
         {
-            bool bit = LsbCryptRead::getBit(cypherArray.data()[i], j);
+            bool bit = LsbStegRead::getBit(cypherArray.data()[i], j);
 
-            LsbCryptWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos, bitPos++);
+            LsbStegWrite::writeBit(bit, m_stegoImage.bits(), m_dataPos, bitPos++);
 
             if (bitPos == m_bitsPerByte)
             {
@@ -533,7 +533,7 @@ void LsbCrypt::writeStegoData(QByteArray cypherArray)
     }
 }
 
-void LsbCrypt::readStegoData(char toArray[], int cypherByteArraySize)
+void LsbSteg::readStegoData(char toArray[], int cypherByteArraySize)
 {
     // factor is used to stretch data array all over the image.
     int factor = floor((double) availableSize(m_stegoImage) / (cypherByteArraySize * 8));
@@ -554,7 +554,7 @@ void LsbCrypt::readStegoData(char toArray[], int cypherByteArraySize)
     {
         for (int j = 0; j < 8; ++j)
         {
-            bool bit = LsbCryptRead::getBit(m_stegoImage.bits()[m_dataPos], bitPos++);
+            bool bit = LsbStegRead::getBit(m_stegoImage.bits()[m_dataPos], bitPos++);
 
             if (bit)
                 toArray[i] |= (1 << j);
@@ -572,17 +572,17 @@ void LsbCrypt::readStegoData(char toArray[], int cypherByteArraySize)
     ++m_dataPos;
 }
 
-int LsbCrypt::bitsPerByte() const
+int LsbSteg::bitsPerByte() const
 {
     return m_bitsPerByte;
 }
 
-void LsbCrypt::setBitsPerByte(int bitsPerByte)
+void LsbSteg::setBitsPerByte(int bitsPerByte)
 {
     m_bitsPerByte = bitsPerByte;
 }
 
-bool LsbCrypt::saveImage(const char *filename, QImage image, int cvType)
+bool LsbSteg::saveImage(const char *filename, QImage image, int cvType)
 {
 
     cv::Mat mat(image.height(), image.width(), cvType, image.bits(), image.bytesPerLine());
@@ -594,31 +594,31 @@ bool LsbCrypt::saveImage(const char *filename, QImage image, int cvType)
     return cv::imwrite(filename, mat, compressionParams);
 }
 
-QImage LsbCrypt::errorImage()
+QImage LsbSteg::errorImage()
 {
     return QImage();
 }
 
-QString LsbCrypt::password() const
+QString LsbSteg::password() const
 {
     return m_password;
 }
 
-void LsbCrypt::setPassword(const QString &password)
+void LsbSteg::setPassword(const QString &password)
 {
     m_password = password;
 }
 
-LsbCrypt::Error LsbCrypt::lastError() const
+LsbSteg::Error LsbSteg::lastError() const
 {
     return m_lastError;
 }
 
-LsbCrypt::Format LsbCrypt::getFormat(QImage &image)
+LsbSteg::Format LsbSteg::getFormat(QImage &image)
 {
     int dataPos = 0;
 
-    int fmt = LsbCryptRead::parseInt(
+    int fmt = LsbStegRead::parseInt(
                 image.bits(), &dataPos, nFormatBits, nFormatBitsPerByte);
 
     if (fmt == 0)
@@ -627,11 +627,11 @@ LsbCrypt::Format LsbCrypt::getFormat(QImage &image)
         return Format_Image;
 }
 
-int LsbCrypt::encryptedObjectSize(QImage &secret)
+int LsbSteg::encryptedObjectSize(QImage &secret)
 {
     int usedSize = ceil((double) nMagicBits / nMagicBitsPerByte);
     usedSize += ceil((double) nFormatBits / nFormatBitsPerByte);
-    usedSize += m_sizeOfInt;
+    usedSize += sizeOfInt;
 
     // calculating byte array size
     QBuffer buffer;
@@ -655,11 +655,11 @@ int LsbCrypt::encryptedObjectSize(QImage &secret)
     return usedSize;
 }
 
-int LsbCrypt::encryptedObjectSize(QString text)
+int LsbSteg::encryptedObjectSize(QString text)
 {
     int usedSize = ceil((double) nMagicBits / nMagicBitsPerByte);
     usedSize += ceil((double) nFormatBits / nFormatBitsPerByte);
-    usedSize += m_sizeOfInt;
+    usedSize += sizeOfInt;
 
     // calculating byte array size
     QBuffer buffer;
@@ -683,7 +683,7 @@ int LsbCrypt::encryptedObjectSize(QString text)
     return usedSize;
 }
 
-int LsbCrypt::availableSize(QImage &image)
+int LsbSteg::availableSize(QImage &image)
 {
     /*int availableSize; =
             (cover.byteCount() * m_bitsPerByte) -
@@ -697,7 +697,7 @@ int LsbCrypt::availableSize(QImage &image)
     // size to store bits per byte value
     headerSize += ceil((double)nMagicBits / nMagicBitsPerByte);  // bytes
     // size taken to store the size of byte array
-    headerSize += ceil((double) m_sizeOfInt / m_bitsPerByte);  // bytes
+    headerSize += ceil((double) sizeOfInt / m_bitsPerByte);  // bytes
 
     // total available bytes to hide data is given by..
     int availableSize = (image.byteCount() - headerSize) * m_bitsPerByte;
@@ -706,7 +706,7 @@ int LsbCrypt::availableSize(QImage &image)
 }
 
 
-bool LsbCrypt::canHideImage(int byteArraySize)
+bool LsbSteg::canHideImage(int byteArraySize)
 {
     if (availableSize(m_stegoImage) <= byteArraySize * 8)
         return false;

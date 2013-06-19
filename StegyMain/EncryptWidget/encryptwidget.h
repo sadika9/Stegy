@@ -37,7 +37,7 @@ private:
 
     int getBitsPerByte();
 
-    lsb::LsbCrypt::Format m_format;
+    lsb::LsbSteg::Format m_format;
 
     QImage m_coverImage;
     QImage m_secretImage;

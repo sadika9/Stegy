@@ -50,7 +50,7 @@ private:
 
     QString m_secretText;
 
-    lsb::LsbCrypt::Format m_format;
+    lsb::LsbSteg::Format m_format;
 };
 
 #endif // DECRYPTWIDGET_H
