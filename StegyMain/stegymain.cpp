@@ -71,6 +71,6 @@ void StegyMain::showMessage(QString message)
 
 void StegyMain::about()
 {
-    AboutDialog *about = new AboutDialog(this);
-    about->show();
+    AboutDialog about;
+    about.exec();
 }
