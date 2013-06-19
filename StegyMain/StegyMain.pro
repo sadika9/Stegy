@@ -15,20 +15,24 @@ TEMPLATE = app
 SOURCES += main.cpp\
         stegymain.cpp \
     DecryptWidget/decryptwidget.cpp \
-    EncryptWidget/encryptwidget.cpp
+    EncryptWidget/encryptwidget.cpp \
+    AboutDialog/aboutdialog.cpp
 
 HEADERS  += stegymain.h \
     DecryptWidget/decryptwidget.h \
     lsbcrypterrormessages.h \
-    EncryptWidget/encryptwidget.h
+    EncryptWidget/encryptwidget.h \
+    AboutDialog/aboutdialog.h
 
 FORMS    += stegymain.ui \
     DecryptWidget/decryptwidget.ui \
-    EncryptWidget/encryptwidget.ui
+    EncryptWidget/encryptwidget.ui \
+    AboutDialog/aboutdialog.ui
 
 INCLUDEPATH += ./ \
     DecryptWidget/ \
-    EncryptWidget/
+    EncryptWidget/ \
+    AboutDialog/
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ImageViewer/release/ -lImageViewer
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ImageViewer/debug/ -lImageViewer
@@ -67,4 +71,7 @@ win32:LIBS += -LF:\\opencv\\lib \
 
 RESOURCES += \
     resources.qrc
+
+OTHER_FILES += \
+    AboutDialog/AboutDialog.pro
 
