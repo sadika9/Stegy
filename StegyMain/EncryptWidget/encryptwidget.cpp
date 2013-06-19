@@ -225,7 +225,10 @@ void EncryptWidget::encryptImage()
         m_stegoImage = crypt.hideString(m_coverImage, ui->secretTextEdit->toPlainText());
 
         if (crypt.lastError() != LsbCrypt::Error_NoError)
+        {
             lsbCryptErrorMessages(crypt.lastError(), this);
+            return;
+        }
 
         ui->saveButton->setEnabled(true);
         showPreview("EncryptButton");
@@ -243,7 +246,10 @@ void EncryptWidget::encryptImage()
         m_stegoImage = crypt.hideImage(m_coverImage, m_secretImage);
 
         if (crypt.lastError() != LsbCrypt::Error_NoError)
+        {
             lsbCryptErrorMessages(crypt.lastError(), this);
+            return;
+        }
 
         ui->saveButton->setEnabled(true);
         showPreview("EncryptButton");

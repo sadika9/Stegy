@@ -55,7 +55,7 @@ static void lsbCryptErrorMessages(lsb::LsbCrypt::Error error, QWidget *parent = 
         break;
     }
 
-    QMessageBox::warning(parent, qApp->tr("LsbCrypt Error"), msg);
+    QMessageBox::warning(parent, qApp->tr("Lsb Error"), msg);
 }
 
 #endif // LSBCRYPTERRORMESSAGES_H
