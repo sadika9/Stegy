@@ -6,16 +6,18 @@
 
 QT       += core gui
 
-TARGET = LsbCrypt
+TARGET = LsbSteg
 TEMPLATE = lib
 CONFIG += staticlib
 
-SOURCES += lsbcrypt.cpp \
-    ../SimpleCrypt/simplecrypt.cpp
+SOURCES += \
+    ../SimpleCrypt/simplecrypt.cpp \
+    lsbsteg.cpp
 
-HEADERS += lsbcrypt.h \
+HEADERS += \
     passtokey.h \
-    ../SimpleCrypt/simplecrypt.h
+    ../SimpleCrypt/simplecrypt.h \
+    lsbsteg.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

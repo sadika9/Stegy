@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DecryptWidget</class>
- <widget class="QWidget" name="DecryptWidget">
+ <class>DecodeWidget</class>
+ <widget class="QWidget" name="DecodeWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>DecryptWidget</string>
+   <string>DecodeWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -57,7 +57,7 @@
     </widget>
    </item>
    <item row="1" column="2" colspan="2">
-    <widget class="QPushButton" name="decryptButton">
+    <widget class="QPushButton" name="decodeButton">
      <property name="text">
       <string>Unhide</string>
      </property>

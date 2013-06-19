@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "lsbcrypt.h"
+#include "lsbsteg.h"
 #include "passtokey.h"
 #include <cmath>
 
@@ -39,14 +39,14 @@ QImage LsbSteg::hideImage(QImage &coverImage, QImage &secretImage)
     if (secretImage.isNull())
     {
         m_lastError = Error_InvalidSecretImage;
-        qWarning() << "encryptImage()" << "InvalidSecretImage";
+        qWarning() << Q_FUNC_INFO << "InvalidSecretImage";
         return QImage();
     }
 
     if (coverImage.isNull())
     {
         m_lastError = Error_InvalidCoverImage;
-        qWarning() << "encryptImage()" << "InvalidCoverImage";
+        qWarning() << Q_FUNC_INFO << "InvalidCoverImage";
         return QImage();
     }
 
@@ -61,7 +61,7 @@ QImage LsbSteg::hideImage(QImage &coverImage, QImage &secretImage)
     writeBitsPerByte();
     if (m_lastError == Error_InvalidBitsPerByte)
     {
-        qWarning() << "encryptImage()" << "InvalidBitsPerByte";
+        qWarning() << Q_FUNC_INFO << "InvalidBitsPerByte";
         return QImage();
     }
 
@@ -81,7 +81,7 @@ QImage LsbSteg::hideImage(QImage &coverImage, QImage &secretImage)
     if (crypt.lastError() != crypt.ErrorNoError)
     {
         m_lastError = Error_EncryptionError;
-        qWarning() << "encryptImage()" << "EncryptionError";
+        qWarning() << Q_FUNC_INFO << "EncryptionError";
         return QImage();
     }
     buffer.close();
@@ -92,14 +92,14 @@ QImage LsbSteg::hideImage(QImage &coverImage, QImage &secretImage)
     if (!canHideImage(cypherArraySize))
     {
         m_lastError = Error_SecretImageTooLarge;
-        qWarning() << "encryptImage()" << "SecretImageTooLarge";
+        qWarning() << Q_FUNC_INFO << "SecretImageTooLarge";
         return QImage();
     }
 
     writeByteArraySize(cypherArraySize);
     if (m_lastError == Error_InvalidByteArraySize)
     {
-        qWarning() << "encryptImage()" << "InvalidByteArraySize";
+        qWarning() << Q_FUNC_INFO << "InvalidByteArraySize";
         return QImage();
     }
 
@@ -112,7 +112,7 @@ QImage LsbSteg::hideImage(QImage &coverImage, QImage &secretImage)
     writeStegoData(cypherArray);
     if (m_lastError == Error_InvalidFactor)
     {
-        qWarning() << "encryptImage()" << "InvalidFactor";
+        qWarning() << Q_FUNC_INFO << "InvalidFactor";
         return QImage();
     }
 
@@ -131,7 +131,7 @@ QImage LsbSteg::unhideImage(QImage &stegoImage)
     if (stegoImage.isNull())
     {
         m_lastError = Error_InvalidStegoImage;
-        qWarning() << "decryptImage()" << "InvalidStegoImage";
+        qWarning() << Q_FUNC_INFO << "InvalidStegoImage";
         return QImage();
     }
     m_stegoImage = stegoImage.copy();
@@ -142,14 +142,14 @@ QImage LsbSteg::unhideImage(QImage &stegoImage)
     if (m_format != Format_Image)
     {
         m_lastError = Error_WrongFormat;
-        qWarning() << "decryptImage()" << "WrongFormat";
+        qWarning() << Q_FUNC_INFO << "WrongFormat";
         return QImage();
     }
 
     readBitsPerByte();
     if (m_lastError == Error_InvalidBitsPerByte)
     {
-        qWarning() << "decryptImage()" << "InvalidBitsPerByte";
+        qWarning() << Q_FUNC_INFO << "InvalidBitsPerByte";
         return QImage();
     }
 
@@ -157,7 +157,7 @@ QImage LsbSteg::unhideImage(QImage &stegoImage)
     int cypherByteArraySize = readByteArraySize();
     if (m_lastError == Error_InvalidByteArraySize)
     {
-        qWarning() << "decryptImage()" << "InvalidByteArraySize";
+        qWarning() << Q_FUNC_INFO << "InvalidByteArraySize";
         return QImage();
     }
 
@@ -170,7 +170,7 @@ QImage LsbSteg::unhideImage(QImage &stegoImage)
     readStegoData(data, cypherByteArraySize);
     if (m_lastError == Error_InvalidFactor)
     {
-        qWarning() << "decryptImage()" << "InvalidFactor";
+        qWarning() << Q_FUNC_INFO << "InvalidFactor";
         return QImage();
     }
 
@@ -186,7 +186,7 @@ QImage LsbSteg::unhideImage(QImage &stegoImage)
     if (crypt.lastError() != SimpleCrypt::ErrorNoError)
     {
         m_lastError = Error_DecryptionError;
-        qWarning() << "decryptImage()" << "DecryptionError" << "crypt.lastError()" << crypt.lastError();
+        qWarning() << Q_FUNC_INFO << "DecryptionError" << "crypt.lastError()" << crypt.lastError();
         return QImage();
     }
 
@@ -214,14 +214,14 @@ QImage LsbSteg::hideString(QImage &coverImage, QString text)
     if (text.isEmpty())
     {
         m_lastError = Error_InvalidText;
-        qWarning() << "encryptString()" << "InvalidText";
+        qWarning() << Q_FUNC_INFO << "InvalidText";
         return QImage();
     }
 
     if (coverImage.isNull())
     {
         m_lastError = Error_InvalidCoverImage;
-        qWarning() << "encryptString()" << "InvalidCoverImage";
+        qWarning() << Q_FUNC_INFO << "InvalidCoverImage";
         return QImage();
     }
 
@@ -236,7 +236,7 @@ QImage LsbSteg::hideString(QImage &coverImage, QString text)
     writeBitsPerByte();
     if (m_lastError == Error_InvalidBitsPerByte)
     {
-        qWarning() << "encryptString()" << "InvalidBitsPerByte";
+        qWarning() << Q_FUNC_INFO << "InvalidBitsPerByte";
         return QImage();
     }
 
@@ -257,7 +257,7 @@ QImage LsbSteg::hideString(QImage &coverImage, QString text)
     if (crypt.lastError() != crypt.ErrorNoError)
     {
         m_lastError = Error_EncryptionError;
-        qWarning() << "encryptString()" << "EncryptionError";
+        qWarning() << Q_FUNC_INFO << "EncryptionError";
         return QImage();
     }
     buffer.close();
@@ -265,14 +265,14 @@ QImage LsbSteg::hideString(QImage &coverImage, QString text)
     if (!canHideImage(cypherArraySize))
     {
         m_lastError = Error_SecretTextTooLarge;
-        qWarning() << "encryptString()" << "SecretTextTooLarge";
+        qWarning() << Q_FUNC_INFO << "SecretTextTooLarge";
         return QImage();
     }
 
     writeByteArraySize(cypherArraySize);
     if (m_lastError == Error_InvalidByteArraySize)
     {
-        qWarning() << "encryptString()" << "InvalidByteArraySize";
+        qWarning() << Q_FUNC_INFO << "InvalidByteArraySize";
         return QImage();
     }
 
@@ -282,7 +282,7 @@ QImage LsbSteg::hideString(QImage &coverImage, QString text)
     writeStegoData(cypherArray);
     if (m_lastError == Error_InvalidFactor)
     {
-        qWarning() << "encryptString()" << "InvalidFactor";
+        qWarning() << Q_FUNC_INFO << "InvalidFactor";
         return QImage();
     }
 
@@ -300,7 +300,7 @@ QString LsbSteg::unhideString(QImage &stegoImage)
     if (stegoImage.isNull())
     {
         m_lastError = Error_InvalidStegoImage;
-        qWarning() << "decryptString()" << "InvalidStegoImage";
+        qWarning() << Q_FUNC_INFO << "InvalidStegoImage";
         return QString();
     }
     m_stegoImage = stegoImage.copy();
@@ -310,7 +310,7 @@ QString LsbSteg::unhideString(QImage &stegoImage)
     if (m_format != Format_Text)
     {
         m_lastError = Error_WrongFormat;
-        qWarning() << "decryptString()" << "WrongFormat";
+        qWarning() << Q_FUNC_INFO << "WrongFormat";
         return QString();
     }
 
@@ -318,14 +318,14 @@ QString LsbSteg::unhideString(QImage &stegoImage)
     readBitsPerByte();
     if (m_lastError == Error_InvalidBitsPerByte)
     {
-        qWarning() << "decryptString()" << "InvalidBitsPerByte";
+        qWarning() << Q_FUNC_INFO << "InvalidBitsPerByte";
         return QString();
     }
 
     int cypherByteArraySize = readByteArraySize();
     if (m_lastError == Error_InvalidByteArraySize)
     {
-        qWarning() << "decryptString()" << "InvalidByteArraySize";
+        qWarning() << Q_FUNC_INFO << "InvalidByteArraySize";
         return QString();
     }
 
@@ -340,7 +340,7 @@ QString LsbSteg::unhideString(QImage &stegoImage)
     readStegoData(data, cypherByteArraySize);
     if (m_lastError == Error_InvalidFactor)
     {
-        qWarning() << "decryptString()" << "InvalidFactor";
+        qWarning() << Q_FUNC_INFO << "InvalidFactor";
         return QString();
     }
 
@@ -354,7 +354,7 @@ QString LsbSteg::unhideString(QImage &stegoImage)
     if (crypt.lastError() != SimpleCrypt::ErrorNoError)
     {
         m_lastError = Error_DecryptionError;
-        qWarning() << "decryptString()" << "DecryptionError" << "crypt.lastError()" << crypt.lastError();
+        qWarning() << Q_FUNC_INFO << "DecryptionError" << "crypt.lastError()" << crypt.lastError();
         return QString();
     }
 
@@ -511,7 +511,7 @@ void LsbSteg::writeStegoData(QByteArray cypherArray)
     if (factor < 0)
     {
         m_lastError = Error_InvalidFactor;
-        qWarning() << "writeStegoData()" << "Error_InvalidFactor";
+        qWarning() << Q_FUNC_INFO << "Error_InvalidFactor";
         return;
     }
 
@@ -540,7 +540,7 @@ void LsbSteg::readStegoData(char toArray[], int cypherByteArraySize)
     if (factor < 0)
     {
         m_lastError = Error_InvalidFactor;
-        qWarning() << "readStegoData()" << "Error_InvalidFactor";
+        qWarning() << Q_FUNC_INFO << "Error_InvalidFactor";
         return;
     }
 
@@ -646,7 +646,7 @@ int LsbSteg::encryptedObjectSize(QImage &secret)
     if (crypt.lastError() != crypt.ErrorNoError)
     {
         m_lastError = Error_EncryptionError;
-        qWarning() << "encryptImage()" << "EncryptionError";
+        qWarning() << Q_FUNC_INFO << "EncryptionError";
     }
     buffer.close();
 
@@ -674,7 +674,7 @@ int LsbSteg::encryptedObjectSize(QString text)
     if (crypt.lastError() != crypt.ErrorNoError)
     {
         m_lastError = Error_EncryptionError;
-        qWarning() << "encryptImage()" << "EncryptionError";
+        qWarning() << Q_FUNC_INFO << "EncryptionError";
     }
     buffer.close();
 

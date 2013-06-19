@@ -28,16 +28,16 @@ StegyMain::StegyMain(QWidget *parent) :
 
     signalMapper = new QSignalMapper(this);
 
-    signalMapper->setMapping(ui->actionEncrypt, "ACTION_ENCRYPT");
-    signalMapper->setMapping(ui->actionDecrypt, "ACTION_DECRYPT");
+    signalMapper->setMapping(ui->actionEncode, "ACTION_ENCODE");
+    signalMapper->setMapping(ui->actionDecode, "ACTION_DECODE");
 
-    connect(ui->actionEncrypt, SIGNAL(triggered()), signalMapper, SLOT(map()));
-    connect(ui->actionDecrypt, SIGNAL(triggered()), signalMapper, SLOT(map()));
+    connect(ui->actionEncode, SIGNAL(triggered()), signalMapper, SLOT(map()));
+    connect(ui->actionDecode, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(setPage(QString)));
 
-    connect(ui->encryptPage, &EncryptWidget::statusMessage, this, &StegyMain::showMessage);
-    connect(ui->decryptPage, &DecryptWidget::statusMessage, this, &StegyMain::showMessage);
+    connect(ui->encodePage, &EncodeWidget::statusMessage, this, &StegyMain::showMessage);
+    connect(ui->decodePage, &DecodeWidget::statusMessage, this, &StegyMain::showMessage);
 
     connect(ui->actionAbout, &QAction::triggered, this, &StegyMain::about);
 
@@ -54,7 +54,7 @@ StegyMain::~StegyMain()
 
 void StegyMain::setPage(QString action)
 {
-    if (action == "ACTION_ENCRYPT")
+    if (action == "ACTION_ENCODE")
     {
         ui->stackedWidget->setCurrentIndex(0);
     }

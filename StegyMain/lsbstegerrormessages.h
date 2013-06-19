@@ -16,9 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef LSBCRYPTERRORMESSAGES_H
-#define LSBCRYPTERRORMESSAGES_H
+#define LSBSTEGERRORMESSAGES_H
 
-#include "lsbcrypt.h"
+#include "lsbsteg.h"
 #include <QMessageBox>
 #include <QApplication>
 
@@ -75,4 +75,4 @@ static void lsbCryptErrorMessages(lsb::LsbSteg::Error error, QWidget *parent = 0
     QMessageBox::warning(parent, qApp->tr("Lsb Error"), msg);
 }
 
-#endif // LSBCRYPTERRORMESSAGES_H
+#endif // LSBSTEGERRORMESSAGES_H

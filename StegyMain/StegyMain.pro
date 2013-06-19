@@ -14,24 +14,24 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         stegymain.cpp \
-    DecryptWidget/decryptwidget.cpp \
-    EncryptWidget/encryptwidget.cpp \
-    AboutDialog/aboutdialog.cpp
+    AboutDialog/aboutdialog.cpp \
+    DecodeWidget/decodewidget.cpp \
+    EncodeWidget/encodewidget.cpp
 
 HEADERS  += stegymain.h \
-    DecryptWidget/decryptwidget.h \
-    lsbcrypterrormessages.h \
-    EncryptWidget/encryptwidget.h \
-    AboutDialog/aboutdialog.h
+    lsbstegerrormessages.h \
+    AboutDialog/aboutdialog.h \
+    DecodeWidget/decodewidget.h \
+    EncodeWidget/encodewidget.h
 
 FORMS    += stegymain.ui \
-    DecryptWidget/decryptwidget.ui \
-    EncryptWidget/encryptwidget.ui \
+    DecodeWidget/decodewidget.ui \
+    EncodeWidget/encodewidget.ui \
     AboutDialog/aboutdialog.ui
 
 INCLUDEPATH += ./ \
-    DecryptWidget/ \
-    EncryptWidget/ \
+    DecodeWidget/ \
+    EncodeWidget/ \
     AboutDialog/
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ImageViewer/release/ -lImageViewer
@@ -45,16 +45,16 @@ win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../ImageViewer
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../ImageViewer/debug/ImageViewer.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../ImageViewer/libImageViewer.a
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../LsbCrypt/release/ -lLsbCrypt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../LsbCrypt/debug/ -lLsbCrypt
-else:unix: LIBS += -L$$OUT_PWD/../LsbCrypt/ -lLsbCrypt
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../LsbSteg/release/ -lLsbSteg
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../LsbSteg/debug/ -lLsbSteg
+else:unix: LIBS += -L$$OUT_PWD/../LsbSteg/ -lLsbSteg
 
-INCLUDEPATH += $$PWD/../LsbCrypt
-DEPENDPATH += $$PWD/../LsbCrypt
+INCLUDEPATH += $$PWD/../LsbSteg
+DEPENDPATH += $$PWD/../LsbSteg
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../LsbCrypt/release/LsbCrypt.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../LsbCrypt/debug/LsbCrypt.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../LsbCrypt/libLsbCrypt.a
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../LsbSteg/release/LsbSteg.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../LsbSteg/debug/LsbSteg.lib
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../LsbSteg/libLsbSteg.a
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += opencv

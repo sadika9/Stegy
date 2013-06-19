@@ -15,19 +15,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "encryptwidget.h"
-#include "ui_encryptwidget.h"
+#include "encodewidget.h"
+#include "ui_encodewidget.h"
 
 #include <QtWidgets>
-#include "lsbcrypt.h"
-#include "../lsbcrypterrormessages.h"
+#include "lsbsteg.h"
+#include "../lsbstegerrormessages.h"
 
-EncryptWidget::EncryptWidget(QWidget *parent) :
+EncodeWidget::EncodeWidget(QWidget *parent) :
     QWidget(parent),
     hasCoverImage(false),
     hasSecretImage(false),
     hasSecretText(false),
-    ui(new Ui::EncryptWidget)
+    ui(new Ui::EncodeWidget)
 {
     ui->setupUi(this);
 
@@ -42,13 +42,13 @@ EncryptWidget::EncryptWidget(QWidget *parent) :
     setupConnections();
 }
 
-EncryptWidget::~EncryptWidget()
+EncodeWidget::~EncodeWidget()
 {
     delete signalMapper;
     delete ui;
 }
 
-void EncryptWidget::showPreview(QString image)
+void EncodeWidget::showPreview(QString image)
 {
 
     if (image == "CoverPreviewButton")
@@ -77,7 +77,7 @@ void EncryptWidget::showPreview(QString image)
         sizes.replace(1, ui->graphicsView->scene()->width());
         ui->splitter->setSizes(sizes);
     }
-    else if (image == "EncryptButton")
+    else if (image == "EncodeButton")
     {
         ui->graphicsView->scene()->clear();
         QGraphicsPixmapItem *pixItem = new QGraphicsPixmapItem(QPixmap::fromImage(m_stegoImage));
@@ -92,7 +92,7 @@ void EncryptWidget::showPreview(QString image)
     }
 }
 
-void EncryptWidget::hidePreview()
+void EncodeWidget::hidePreview()
 {
     ui->graphicsView->setVisible(false);
     ui->hidePreviewButton->setVisible(false);
@@ -102,7 +102,7 @@ void EncryptWidget::hidePreview()
     ui->splitter->setSizes(sizes);
 }
 
-void EncryptWidget::formatChanged()
+void EncodeWidget::formatChanged()
 {
     if (ui->imageRadio->isChecked())
     {
@@ -116,14 +116,14 @@ void EncryptWidget::formatChanged()
     }
 }
 
-void EncryptWidget::openImage(QString image)
+void EncodeWidget::openImage(QString image)
 {
     if (image == "CoverBrowseButton")
     {
         ui->coverPreviewButton->setEnabled(false);
         ui->coverPathEdit->setText("");
         hasCoverImage = false;
-        //enableEncryptButton();
+        //enableEncodeButton();
 
         QString fileName =
                 QFileDialog::getOpenFileName(this,
@@ -172,7 +172,7 @@ void EncryptWidget::openImage(QString image)
         ui->coverPreviewButton->setEnabled(true);
         ui->coverPathEdit->setText(fileName);
         hasCoverImage = true;
-        //enableEncryptButton();
+        //enableEncodeButton();
 
         emit statusMessage(tr("Cover image loaded."));
     }
@@ -181,7 +181,7 @@ void EncryptWidget::openImage(QString image)
         ui->secretPreviewButton->setEnabled(false);
         ui->secretPathEdit->setText("");
         hasSecretImage = false;
-        //enableEncryptButton();
+        //enableEncodeButton();
 
         QString fileName =
                 QFileDialog::getOpenFileName(this,
@@ -206,23 +206,23 @@ void EncryptWidget::openImage(QString image)
         ui->secretPreviewButton->setEnabled(true);
         ui->secretPathEdit->setText(fileName);
         hasSecretImage = true;
-        //enableEncryptButton();
+        //enableEncodeButton();
 
         emit statusMessage(tr("Secret image loaded."));
     }
 }
 
-void EncryptWidget::enableEncryptButton()
+void EncodeWidget::enableEncodeButton()
 {
     if (hasCoverImage && (hasSecretImage || !ui->secretTextEdit->toPlainText().isEmpty()))
-        ui->encryptButton->setEnabled(true);
+        ui->encodeButton->setEnabled(true);
     else
-        ui->encryptButton->setEnabled(false);
+        ui->encodeButton->setEnabled(false);
 
     ui->saveButton->setEnabled(false);
 }
 
-void EncryptWidget::encryptImage()
+void EncodeWidget::encodeImage()
 {
     using namespace lsb;
 
@@ -248,7 +248,7 @@ void EncryptWidget::encryptImage()
         }
 
         ui->saveButton->setEnabled(true);
-        showPreview("EncryptButton");
+        showPreview("EncodeButton");
 
         emit statusMessage(tr("Encoded."));
     }
@@ -269,13 +269,13 @@ void EncryptWidget::encryptImage()
         }
 
         ui->saveButton->setEnabled(true);
-        showPreview("EncryptButton");
+        showPreview("EncodeButton");
 
         emit statusMessage(tr("Encoded."));
     }
 }
 
-void EncryptWidget::saveImage()
+void EncodeWidget::saveImage()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save Image"),
@@ -293,15 +293,15 @@ void EncryptWidget::saveImage()
     emit statusMessage(tr("Stego image saved."));
 }
 
-void EncryptWidget::disableButtons()
+void EncodeWidget::disableButtons()
 {
     ui->coverPreviewButton->setEnabled(false);
     ui->secretPreviewButton->setEnabled(false);
-    ui->encryptButton->setEnabled(false);
+    ui->encodeButton->setEnabled(false);
     ui->saveButton->setEnabled(false);
 }
 
-int EncryptWidget::getBitsPerByte()
+int EncodeWidget::getBitsPerByte()
 {
     /*
     // hard coding is used since there is a problem with the lsbcrypt algorithm
@@ -324,15 +324,15 @@ int EncryptWidget::getBitsPerByte()
     return 9 - ui->qualitySlider->value();
 }
 
-void EncryptWidget::setupConnections()
+void EncodeWidget::setupConnections()
 {
     signalMapper = new QSignalMapper(this);
 
 
-    connect(ui->hidePreviewButton, &QPushButton::clicked, this, &EncryptWidget::hidePreview);
+    connect(ui->hidePreviewButton, &QPushButton::clicked, this, &EncodeWidget::hidePreview);
 
-    connect(ui->imageRadio, &QRadioButton::toggled, this, &EncryptWidget::formatChanged);
-    connect(ui->textRadio, &QRadioButton::toggled, this, &EncryptWidget::formatChanged);
+    connect(ui->imageRadio, &QRadioButton::toggled, this, &EncodeWidget::formatChanged);
+    connect(ui->textRadio, &QRadioButton::toggled, this, &EncodeWidget::formatChanged);
 
 
 
@@ -340,23 +340,23 @@ void EncryptWidget::setupConnections()
     signalMapper->setMapping(ui->secretBrowseButton, QString("SecretBrowseButton"));
     signalMapper->setMapping(ui->coverPreviewButton, QString("CoverPreviewButton"));
     signalMapper->setMapping(ui->secretPreviewButton, QString("SecretPreviewButton"));
-    signalMapper->setMapping(ui->encryptButton, QString("EncryptButton"));
+    signalMapper->setMapping(ui->encodeButton, QString("EncodeButton"));
 
     connect(ui->coverBrowseButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->secretBrowseButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->coverPreviewButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->secretPreviewButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    connect(ui->encryptButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    connect(ui->encodeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
 
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(openImage(QString)));
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(showPreview(QString)));
 
 
-    connect(ui->coverBrowseButton, &QPushButton::clicked, this, &EncryptWidget::enableEncryptButton);
-    connect(ui->secretBrowseButton, &QPushButton::clicked, this, &EncryptWidget::enableEncryptButton);
-    connect(ui->secretTextEdit, &QPlainTextEdit::modificationChanged, this, &EncryptWidget::enableEncryptButton);
+    connect(ui->coverBrowseButton, &QPushButton::clicked, this, &EncodeWidget::enableEncodeButton);
+    connect(ui->secretBrowseButton, &QPushButton::clicked, this, &EncodeWidget::enableEncodeButton);
+    connect(ui->secretTextEdit, &QPlainTextEdit::modificationChanged, this, &EncodeWidget::enableEncodeButton);
 
-    connect(ui->encryptButton, &QPushButton::clicked, this, &EncryptWidget::encryptImage);
+    connect(ui->encodeButton, &QPushButton::clicked, this, &EncodeWidget::encodeImage);
 
-    connect(ui->saveButton, &QPushButton::clicked, this, &EncryptWidget::saveImage);
+    connect(ui->saveButton, &QPushButton::clicked, this, &EncodeWidget::saveImage);
 }

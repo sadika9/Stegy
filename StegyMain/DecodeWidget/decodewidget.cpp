@@ -15,23 +15,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "decryptwidget.h"
-#include "ui_decryptwidget.h"
+#include "decodewidget.h"
+#include "ui_decodewidget.h"
 
 #include <QtWidgets>
-#include "lsbcrypt.h"
-#include "../lsbcrypterrormessages.h"
+#include "lsbsteg.h"
+#include "../lsbstegerrormessages.h"
 
 #include <QDebug>
 
-DecryptWidget::DecryptWidget(QWidget *parent) :
+DecodeWidget::DecodeWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DecryptWidget)
+    ui(new Ui::DecodeWidget)
 {
     ui->setupUi(this);
 
     ui->previewButton->setEnabled(false);
-    ui->decryptButton->setEnabled(false);
+    ui->decodeButton->setEnabled(false);
 
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
     ui->graphicsView->setScene(new QGraphicsScene);
@@ -42,18 +42,18 @@ DecryptWidget::DecryptWidget(QWidget *parent) :
     ui->graphicsView->setVisible(false);
     ui->saveButton->setVisible(false);
 
-    connect(ui->browseButton, &QPushButton::clicked, this, &DecryptWidget::openImage);
-    connect(ui->previewButton, &QPushButton::clicked, this, &DecryptWidget::previewStegoImage);
-    connect(ui->decryptButton, &QPushButton::clicked, this, &DecryptWidget::decryptImage);
-    connect(ui->saveButton, &QPushButton::clicked, this, &DecryptWidget::saveSecretData);
+    connect(ui->browseButton, &QPushButton::clicked, this, &DecodeWidget::openImage);
+    connect(ui->previewButton, &QPushButton::clicked, this, &DecodeWidget::previewStegoImage);
+    connect(ui->decodeButton, &QPushButton::clicked, this, &DecodeWidget::decodeImage);
+    connect(ui->saveButton, &QPushButton::clicked, this, &DecodeWidget::saveSecretData);
 }
 
-DecryptWidget::~DecryptWidget()
+DecodeWidget::~DecodeWidget()
 {
     delete ui;
 }
 
-void DecryptWidget::openImage()
+void DecodeWidget::openImage()
 {
     QString fileName =
             QFileDialog::getOpenFileName(this,
@@ -65,7 +65,7 @@ void DecryptWidget::openImage()
     {
         //QMessageBox::warning(this, tr("Invalid file"), tr("Invalid file."));
         ui->previewButton->setEnabled(false);
-        ui->decryptButton->setEnabled(false);
+        ui->decodeButton->setEnabled(false);
         ui->saveButton->setVisible(false);
         ui->plainTextEdit->setVisible(false);
         ui->graphicsView->setVisible(false);
@@ -79,13 +79,13 @@ void DecryptWidget::openImage()
     {
         QMessageBox::warning(this, tr("Invalid image"), tr("Invalid image file or format not supported."));
         ui->previewButton->setEnabled(false);
-        ui->decryptButton->setEnabled(false);
+        ui->decodeButton->setEnabled(false);
         return;
     }
 
     ui->stegoPathEdit->setText(fileName);
     ui->previewButton->setEnabled(true);
-    ui->decryptButton->setEnabled(true);
+    ui->decodeButton->setEnabled(true);
 
     ui->saveButton->setVisible(false);
     ui->plainTextEdit->setVisible(false);
@@ -94,7 +94,7 @@ void DecryptWidget::openImage()
     emit statusMessage(tr("Stego image loaded."));
 }
 
-void DecryptWidget::saveSecretData()
+void DecodeWidget::saveSecretData()
 {
     if (m_format == lsb::LsbSteg::Format_Text)
     {
@@ -130,7 +130,7 @@ void DecryptWidget::saveSecretData()
     }
 }
 
-void DecryptWidget::previewStegoImage()
+void DecodeWidget::previewStegoImage()
 {
     ui->graphicsView->scene()->clear();
     QGraphicsPixmapItem *pixItem = new QGraphicsPixmapItem(QPixmap::fromImage(m_stegoImage));
@@ -141,13 +141,13 @@ void DecryptWidget::previewStegoImage()
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void DecryptWidget::decryptImage()
+void DecodeWidget::decodeImage()
 {
     using namespace lsb;
 
     if (m_stegoImage.isNull())
     {
-        QMessageBox::warning(this, tr("Invalid file"), tr("Invalid file. Could not decrypt"));
+        QMessageBox::warning(this, tr("Invalid file"), tr("Invalid file. Could not decode"));
         return;
     }
 

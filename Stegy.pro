@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     ImageViewer \
-    LsbCrypt \
+    LsbSteg \
     #StegyMain/DecryptWidget \
     #StegyMain/EncryptWidget \
     StegyMain

@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LSBCRYPT_H
-#define LSBCRYPT_H
+#ifndef LSBSTEG_H
+#define LSBSTEG_H
 
 #include <QImage>
 #include <QBuffer>
@@ -257,4 +257,4 @@ private:
 }
 
 
-#endif // LSBCRYPT_H
+#endif // LSBSTEG_H

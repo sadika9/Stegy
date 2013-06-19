@@ -1,29 +1,29 @@
-#ifndef ENCRYPTWIDGET_H
-#define ENCRYPTWIDGET_H
+#ifndef ENCODEWIDGET_H
+#define ENCODEWIDGET_H
 
 #include <QWidget>
 #include <QSignalMapper>
-#include "lsbcrypt.h"
+#include "lsbsteg.h"
 
 namespace Ui {
-class EncryptWidget;
+class EncodeWidget;
 }
 
-class EncryptWidget : public QWidget
+class EncodeWidget : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit EncryptWidget(QWidget *parent = 0);
-    ~EncryptWidget();
+    explicit EncodeWidget(QWidget *parent = 0);
+    ~EncodeWidget();
 
 private slots:
     void showPreview(QString image);
     void hidePreview();
     void formatChanged();
     void openImage(QString image);
-    void enableEncryptButton();
-    void encryptImage();
+    void enableEncodeButton();
+    void encodeImage();
     void saveImage();
     //void setButtonEnabled(QString button);
     
@@ -47,8 +47,8 @@ private:
     bool hasSecretImage;
     bool hasSecretText;
 
-    Ui::EncryptWidget *ui;
+    Ui::EncodeWidget *ui;
     QSignalMapper *signalMapper;
 };
 
-#endif // ENCRYPTWIDGET_H
+#endif // ENCODEWIDGET_H

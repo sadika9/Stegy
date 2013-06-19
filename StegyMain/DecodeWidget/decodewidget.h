@@ -15,35 +15,35 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DECRYPTWIDGET_H
-#define DECRYPTWIDGET_H
+#ifndef DECODEWIDGET_H
+#define DECODEWIDGET_H
 
 #include <QWidget>
-#include "lsbcrypt.h"
+#include "lsbsteg.h"
 
 namespace Ui {
-class DecryptWidget;
+class DecodeWidget;
 }
 
-class DecryptWidget : public QWidget
+class DecodeWidget : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit DecryptWidget(QWidget *parent = 0);
-    ~DecryptWidget();
+    explicit DecodeWidget(QWidget *parent = 0);
+    ~DecodeWidget();
 
 private slots:
     void openImage();
     void saveSecretData();
     void previewStegoImage();
-    void decryptImage();
+    void decodeImage();
 
 signals:
     void statusMessage(QString);
     
 private:
-    Ui::DecryptWidget *ui;
+    Ui::DecodeWidget *ui;
 
     QImage m_stegoImage;
     QImage m_secretImage;
@@ -53,4 +53,4 @@ private:
     lsb::LsbSteg::Format m_format;
 };
 
-#endif // DECRYPTWIDGET_H
+#endif // DECODEWIDGET_H

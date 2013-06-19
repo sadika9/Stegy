@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EncryptWidget</class>
- <widget class="QWidget" name="EncryptWidget">
+ <class>EncodeWidget</class>
+ <widget class="QWidget" name="EncodeWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>EncryptWidget</string>
+   <string>EncodeWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
@@ -19,7 +19,7 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="3" column="0">
         <widget class="QLabel" name="label_4">
@@ -242,7 +242,7 @@
         </widget>
        </item>
        <item row="5" column="2">
-        <widget class="QPushButton" name="encryptButton">
+        <widget class="QPushButton" name="encodeButton">
          <property name="text">
           <string>Hide</string>
          </property>
@@ -285,7 +285,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="SGraphicsView" name="graphicsView">
